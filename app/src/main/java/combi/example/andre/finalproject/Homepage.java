@@ -6,7 +6,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 public class Homepage extends AppCompatActivity {
 
@@ -26,7 +30,6 @@ public class Homepage extends AppCompatActivity {
             }
         });
     }
-
     public void MapTest(View view){
         Intent intent = new Intent(this, Map.class);
         startActivity(intent);
