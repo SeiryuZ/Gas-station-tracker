@@ -17,7 +17,7 @@ public class DataParser {
 
         try{
             Log.d("places", "parse");
-            jsonObject = new JSONObject((String) jsonData);
+            jsonObject = new JSONObject(jsonData);
             jsonArray = jsonObject.getJSONArray("results");
         }
         catch(JSONException e){
@@ -66,6 +66,8 @@ public class DataParser {
             }
             latitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lat");
             longitude = googlePlaceJson.getJSONObject("geometry").getJSONObject("location").getString("lng");
+            reference = googlePlaceJson.getString("reference");
+
             googlePlaceMap.put("place_name", placeName);
             googlePlaceMap.put("vicinity", vicinity);
             googlePlaceMap.put("lat", latitude);

@@ -57,6 +57,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+            Log.d("test", "test");
         }
     }
 }

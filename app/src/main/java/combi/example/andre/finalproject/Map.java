@@ -67,6 +67,16 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */,
+                        this /* OnConnectionFailedListener */)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
+        mGoogleApiClient.connect();
+
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -105,11 +115,25 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
 
                     // Update marker position
                     if (marker != null) {marker.remove();}
-                    marker = mMap.addMarker(new MarkerOptions().title("Current location").position(newLocation));
+                    marker = mMap.addMarker(new MarkerOptions().title("Current location").position(newLocation).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+
 
                     // then animate map
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
+
+                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(Marker marker) {
+                        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                            @Override
+                            public void onInfoWindowClick(Marker marker) {
+                                Log.d("markerclick", "clicked");
+                            }
+                        });
+                        return false;
+                    }
+                });
             }
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
@@ -138,7 +162,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
             return;
         }
 
-        String Gas = "gas";
+
+
+
+        String Gas = "gas_station";
 
         //mMap.clear();
         String url = getUrl(latitude, longitude, Gas);
@@ -156,7 +183,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
 
-    Log.d("test", "test");
+
     }
 
     @Override
@@ -207,11 +234,11 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
 
     private String getUrl(double latitude, double longitude, String nearbyPlaces){
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googlePlacesUrl.append("location=" + latitude + longitude);
+        googlePlacesUrl.append("location=" + latitude + "," + longitude);
         googlePlacesUrl.append("&radius=" + PROXRADIUS);
         googlePlacesUrl.append("&type=" + nearbyPlaces);
         googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key" + "AIzaSyACWctAOQn6DgzSbIGJo9uibsYMEIcuwmI");
+        googlePlacesUrl.append("&key" + "AIzaSyBlkAtSgdLTeuiP7V66JbCkYFgKveoK9GI");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
@@ -319,6 +346,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
             //You can add here other case statements according to your requirement.
         }
     }
+
 
 
 
