@@ -29,11 +29,13 @@ public class DataParser {
 
     private List<HashMap<String, String>> getPlaces(JSONArray jsonArray){
         int placesCount = jsonArray.length();
+        Log.d("getbackground", String.valueOf(placesCount));
         List<HashMap<String, String>> placesList = new ArrayList<>();
         HashMap<String, String> placeMap = null;
         Log.d("places", "getPlaces");
 
         for(int i = 0; i < placesCount; i++){
+            Log.d("getbackground", "pc");
             try{
                 placeMap = getPlace((JSONObject) jsonArray.get(i));
                 placesList.add(placeMap);

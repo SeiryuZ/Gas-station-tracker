@@ -56,7 +56,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
     Marker mCurrLocationMarker;
     GoogleMap mMap;
 
-    private int PROXRADIUS = 1000;
+    private int PROXRADIUS = 5000;
     double latitude;
     double longitude;
 
@@ -235,7 +235,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
 
     private String getUrl(double latitude, double longitude, String nearbyPlaces){
         StringBuilder googlePlacesUrl = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        //googlePlacesUrl.append("location=" + latitude + "," + longitude);
+        googlePlacesUrl.append("location=-6.22453,106.804");
         googlePlacesUrl.append("&radius=" + PROXRADIUS);
         googlePlacesUrl.append("&type=" + nearbyPlaces);
         googlePlacesUrl.append("&sensor=true");
