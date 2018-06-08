@@ -42,7 +42,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBlkAtSgdLTeuiP7V66JbCkYFgKveoK9GI" />
 
         <activity
             android:name=".Map"
@@ -53,7 +53,10 @@
         <activity
             android:name=".Homepage"
             android:label="@string/title_activity_homepage"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/title_activity_register"></activity>
     </application>
 
 </manifest>
