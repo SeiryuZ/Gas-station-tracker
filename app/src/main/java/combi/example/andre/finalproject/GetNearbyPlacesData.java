@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -22,13 +21,11 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
     @Override
     protected String doInBackground(Object... params) {
         try{
-            Log.d("getbackground", "dib");
             mMap = (GoogleMap) params[0];
             url = (String) params[1];
             //Log.d("getmap", String.valueOf(mMap.isMyLocationEnabled()));
             DownloadUrl downloadUrl = new DownloadUrl();
             googlePlacesData = downloadUrl.readUrl(url);
-            Log.d("getbackground", "dibexit");
         }
         catch (Exception e){
             Log.d("GooglePlacesReadTask", e.toString());
@@ -38,19 +35,15 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
     @Override
     protected void onPostExecute(String result){
-        Log.d("haha", "ope");
         List<HashMap<String, String>> nearbyPlacesList = null;
         DataParser dataParser = new DataParser();
         nearbyPlacesList = dataParser.parse(result);
         ShowNearbyPlaces(nearbyPlacesList, mMap);
-        Log.d("haha", "opexit");
     }
 
     private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList, GoogleMap mMap){
-        Log.d("getbackground", "snp");
         try{
             for(int i = 0; i < nearbyPlacesList.size(); i++){
-                Log.d("getbackground", "snp");
                 MarkerOptions markerOptions = new MarkerOptions();
                 HashMap<String, String> googlePlace = nearbyPlacesList.get(i);
                 double lat = Double.parseDouble(googlePlace.get("lat"));
@@ -66,8 +59,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-                    Log.d("test", "test");
-                }
+            }
             }
         }
         catch (NullPointerException e){
