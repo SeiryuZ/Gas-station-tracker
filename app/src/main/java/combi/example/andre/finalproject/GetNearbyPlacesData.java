@@ -25,6 +25,7 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
             Log.d("getbackground", "dib");
             mMap = (GoogleMap) params[0];
             url = (String) params[1];
+            //Log.d("getmap", String.valueOf(mMap.isMyLocationEnabled()));
             DownloadUrl downloadUrl = new DownloadUrl();
             googlePlacesData = downloadUrl.readUrl(url);
             Log.d("getbackground", "dibexit");
@@ -41,11 +42,11 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
         List<HashMap<String, String>> nearbyPlacesList = null;
         DataParser dataParser = new DataParser();
         nearbyPlacesList = dataParser.parse(result);
-        ShowNearbyPlaces(nearbyPlacesList);
+        ShowNearbyPlaces(nearbyPlacesList, mMap);
         Log.d("haha", "opexit");
     }
 
-    private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList){
+    private void ShowNearbyPlaces(List<HashMap<String, String>> nearbyPlacesList, GoogleMap mMap){
         Log.d("getbackground", "snp");
         try{
             for(int i = 0; i < nearbyPlacesList.size(); i++){
@@ -57,13 +58,16 @@ public class GetNearbyPlacesData extends AsyncTask<Object, String, String>{
                 String placeName = googlePlace.get("place_name");
                 String vicinity = googlePlace.get("vicinity");
                 LatLng latlng = new LatLng(lat, lng);
+                Log.d("test", String.valueOf(latlng)+placeName+vicinity);
 
-                mMap.addMarker(markerOptions.position(latlng).title(placeName + " : " + vicinity));
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                if(mMap!=null){
+                    mMap.addMarker(markerOptions.position(latlng).title(placeName + " : " + vicinity));
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
-                Log.d("test", "test");
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                    Log.d("test", "test");
+                }
             }
         }
         catch (NullPointerException e){

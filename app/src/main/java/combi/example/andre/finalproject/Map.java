@@ -116,10 +116,22 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
                     // Update marker position
                     if (marker != null) {marker.remove();}
                     marker = mMap.addMarker(new MarkerOptions().title("Current location").position(newLocation).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    Log.d("getmap", String.valueOf(mMap.isMyLocationEnabled()));
 
 
                     // then animate map
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                    String Gas = "gas_station";
+
+                    //mMap.clear();
+                    String url = getUrl(latitude, longitude, Gas);
+                    Object[] DataTransfer = new Object[2];
+                    DataTransfer[0] = mMap;
+                    DataTransfer[1] = url;
+
+                    GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
+                    getNearbyPlacesData.execute(DataTransfer);
+                    Toast.makeText(Map.this, "Stations...", Toast.LENGTH_LONG).show();
                 }
 
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -166,17 +178,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
 
 
 
-        String Gas = "gas_station";
 
-        //mMap.clear();
-        String url = getUrl(latitude, longitude, Gas);
-        Object[] DataTransfer = new Object[2];
-        DataTransfer[0] = mMap;
-        DataTransfer[1] = url;
-
-        GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
-        getNearbyPlacesData.execute(DataTransfer);
-        Toast.makeText(Map.this, "Stations...", Toast.LENGTH_LONG).show();
 
 
 
