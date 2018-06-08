@@ -56,7 +56,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
     Marker mCurrLocationMarker;
     GoogleMap mMap;
 
-    private int PROXRADIUS;
+    private int PROXRADIUS = 1000;
     double latitude;
     double longitude;
 
@@ -128,9 +128,10 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker marker) {
-                                Log.d("markerclick", "clicked");
                             }
                         });
+
+                        Toast.makeText(Map.this, "touch", Toast.LENGTH_LONG).show();
                         return false;
                     }
                 });
@@ -238,7 +239,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback, GoogleA
         googlePlacesUrl.append("&radius=" + PROXRADIUS);
         googlePlacesUrl.append("&type=" + nearbyPlaces);
         googlePlacesUrl.append("&sensor=true");
-        googlePlacesUrl.append("&key" + "AIzaSyBlkAtSgdLTeuiP7V66JbCkYFgKveoK9GI");
+        googlePlacesUrl.append("&key=" + "AIzaSyBlkAtSgdLTeuiP7V66JbCkYFgKveoK9GI");
         Log.d("getUrl", googlePlacesUrl.toString());
         return (googlePlacesUrl.toString());
     }
